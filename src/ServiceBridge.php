@@ -162,13 +162,19 @@ class ServiceBridge{
      * @param null $customerID
      * @return bool|string
      */
-    public function getCustomer($customerID = null){
+    public function getCustomer($customerID = null, $caritaria = array()){
 
         if (!$customerID){
             $url = 'https://cloud.servicebridge.com/api/v1/Customers?page=1&pageSize=500&';
+
+            if(!empty($caritaria)){
+                $url = $url . http_build_query($caritaria). '&';
+            }
+
         } else {
             $url = 'https://cloud.servicebridge.com/api/v1/Customers/'.$customerID."/?";
         }
+
 
         $customer = $this->doCurl($url);
 
